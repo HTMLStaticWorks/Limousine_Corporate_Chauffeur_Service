@@ -1,0 +1,584 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Chauffeur Client & Corporate Dashboard - Manage rides, tracking, receipts, and accounts.">
+  <title>Client Portal Dashboard · Chauffeur.</title>
+  <link rel="icon" type="image/png" href="favicon.png">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- FIXED TOP RIGHT CORNER CONTROLS (USER DETAILS, THEME & RTL) -->
+  <div class="dash-top-corner">
+    <div class="user-chip">
+      <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=120&q=80" alt="Alex R." class="user-avatar">
+      <div class="user-info">
+        <strong>Alex R.</strong>
+        <span>Acme Corp VIP</span>
+      </div>
+    </div>
+    <button class="theme-toggle" type="button" aria-label="Switch theme">☀</button>
+    <button class="dir-toggle" type="button" aria-label="Switch text direction">RTL</button>
+    <button class="menu dash-menu-toggle" type="button" aria-label="Open sidebar menu">☰</button>
+  </div>
+
+  <main class="dash">
+    <!-- SIDEBAR NAV WITH BRAND LOGO AT TOP (TOUCHES BOTTOM ALWAYS) -->
+    <aside class="side">
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:0 12px 20px;border-bottom:1px solid var(--line);margin-bottom:20px">
+        <a class="brand" href="index.html">
+          <img src="logo.png" alt="CHAUFFEUR." class="brand-logo-img">
+        </a>
+        <button class="side-close-btn" type="button" aria-label="Close menu">×</button>
+      </div>
+      <span class="eyebrow" style="padding:0 12px">Client Portal</span>
+      <a class="active" href="#overview" data-dash-tab="overview">Overview</a>
+      <a href="#quick-book" data-dash-tab="quick-book">Book a Ride</a>
+      <a href="#live-tracking" data-dash-tab="live-tracking">Live Dispatch Tracking</a>
+      <a href="#history" data-dash-tab="history">Ride History</a>
+      <a href="#saved-locations" data-dash-tab="saved-locations">Saved Addresses</a>
+      <a href="#billing-section" data-dash-tab="billing-section">Invoices & Receipts</a>
+      
+      <div style="margin-top:15px;padding-top:15px;border-top:1px solid var(--line)">
+        <a href="#" id="open-signout-modal" style="color:var(--accent2);font-weight:700">Sign Out</a>
+      </div>
+    </aside>
+
+    <!-- MAIN DASHBOARD CONTENT PANELS -->
+    <section class="dash-main" style="padding-top:75px">
+      
+      <!-- 1. OVERVIEW TAB PANEL -->
+      <div id="tab-overview" class="dash-tab-panel active">
+        <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:20px;margin-bottom:25px;flex-wrap:wrap">
+          <div>
+            <span class="eyebrow">Acme Corp · Executive Account #AC-9942</span>
+            <h1 class="display" style="font-size:42px;margin:6px 0 0">Good afternoon, Alex.</h1>
+            <p class="muted" style="margin:4px 0 0">Here is your live corporate travel overview and active ride tracking.</p>
+          </div>
+          <div style="display:flex;gap:10px">
+            <button class="btn primary open-book">+ Book New Ride</button>
+          </div>
+        </div>
+
+        <!-- METRIC CARDS -->
+        <div class="dash-cards">
+          <div class="metric">
+            <span>Upcoming Rides</span>
+            <strong>03</strong>
+            <p class="muted">Scheduled this week</p>
+          </div>
+          <div class="metric">
+            <span>This Month</span>
+            <strong>12 Trips</strong>
+            <p class="muted">Completed journeys</p>
+          </div>
+          <div class="metric">
+            <span>Tax Receipts</span>
+            <strong>08 Available</strong>
+            <p class="muted">Synced with Concur</p>
+          </div>
+          <div class="metric">
+            <span>Account Tier</span>
+            <strong style="color:var(--accent2)">Executive VIP</strong>
+            <p class="muted">NET-30 Billing Active</p>
+          </div>
+        </div>
+
+        <!-- ACTIVE RIDE SUMMARY CARD -->
+        <div style="background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:24px;margin-top:30px">
+          <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:15px;margin-bottom:15px">
+            <div>
+              <span class="eyebrow">Active Journey #CH-9042 · Live Radar</span>
+              <h3 class="display" style="font-size:24px;margin:4px 0 0">JFK Terminal 4 → Financial District</h3>
+            </div>
+            <button class="btn small primary" data-switch-tab="live-tracking">Live Dispatch Tracking →</button>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:15px;background:var(--panel2);padding:16px;border-radius:12px;border:1px solid var(--line)">
+            <div><span class="muted" style="font-size:11px">CHAUFFEUR</span><strong style="display:block;font-size:14px">Michael R.</strong></div>
+            <div><span class="muted" style="font-size:11px">VEHICLE</span><strong style="display:block;font-size:14px">Mercedes S-Class (#EX-889)</strong></div>
+            <div><span class="muted" style="font-size:11px">STATUS</span><span class="status">En Route · ETA 8 Mins</span></div>
+          </div>
+        </div>
+
+        <!-- UPCOMING SCHEDULED TRIPS LIST -->
+        <div style="margin-top:35px">
+          <div class="section-head" style="margin-bottom:20px">
+            <div>
+              <span class="eyebrow">Upcoming Itinerary</span>
+              <h2 class="display" style="font-size:28px;margin:4px 0 0">Scheduled Upcoming Journeys</h2>
+            </div>
+          </div>
+          <div style="display:grid;gap:14px">
+            <div style="background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px 22px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:15px">
+              <div>
+                <span class="eyebrow" style="font-size:10px">Tomorrow · 08:30 AM</span>
+                <strong style="display:block;font-size:16px;margin-top:2px">JFK International Airport → Midtown Manhattan HQ</strong>
+                <p class="muted" style="font-size:12px;margin:2px 0 0">Vehicle: Mercedes-Benz S-Class Sedan · Driver: Michael R. · Flight #AF-102</p>
+              </div>
+              <div style="display:flex;gap:8px">
+                <button class="btn small" data-demo-action="Modifying booking #CH-9104...">Edit Booking</button>
+                <button class="btn small primary" data-demo-action="Chauffeur details sent to your phone.">View Chauffeur</button>
+              </div>
+            </div>
+
+            <div style="background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px 22px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:15px">
+              <div>
+                <span class="eyebrow" style="font-size:10px">Friday, 25 Sep · 06:00 PM</span>
+                <strong style="display:block;font-size:16px;margin-top:2px">Acme HQ → Wall Street Financial Summit Dinner</strong>
+                <p class="muted" style="font-size:12px;margin:2px 0 0">Vehicle: BMW 7 Series Executive · Driver: David K. · Hourly As-Directed (4 Hrs)</p>
+              </div>
+              <div style="display:flex;gap:8px">
+                <button class="btn small" data-demo-action="Modifying booking #CH-9140...">Edit Booking</button>
+                <button class="btn small primary" data-demo-action="Chauffeur details sent to your phone.">View Chauffeur</button>
+              </div>
+            </div>
+
+            <div style="background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px 22px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:15px">
+              <div>
+                <span class="eyebrow" style="font-size:10px">Sunday, 27 Sep · 02:15 PM</span>
+                <strong style="display:block;font-size:16px;margin-top:2px">Westchester County Airport (Hangar 2) → Greenwich Estate</strong>
+                <p class="muted" style="font-size:12px;margin:2px 0 0">Vehicle: Cadillac Escalade ESV SUV · Driver: Sarah B. · Tail #N-9042</p>
+              </div>
+              <div style="display:flex;gap:8px">
+                <button class="btn small" data-demo-action="Modifying booking #CH-9201...">Edit Booking</button>
+                <button class="btn small primary" data-demo-action="Chauffeur details sent to your phone.">View Chauffeur</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. BOOK A RIDE TAB PANEL -->
+      <div id="tab-quick-book" class="dash-tab-panel">
+        <div style="margin-bottom:25px">
+          <span class="eyebrow">Instant Reservation</span>
+          <h1 class="display" style="font-size:38px;margin:6px 0 0">Book a Chauffeur Journey</h1>
+          <p class="muted" style="margin:4px 0 0">Schedule executive point-to-point, airport transfers, or hourly as-directed rides.</p>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 380px;gap:28px;align-items:start">
+          
+          <!-- LEFT COLUMN: BOOKING FORM CARD -->
+          <div class="form-card" style="width:100%">
+            <form data-demo data-message="Chauffeur reservation requested successfully! Dispatch confirmation sent to email.">
+              <div class="form-grid">
+                <div class="field">
+                  <label>Pick-up Location</label>
+                  <input required placeholder="Airport, hotel or corporate address">
+                </div>
+                <div class="field">
+                  <label>Destination Location</label>
+                  <input required placeholder="Drop-off address or As-Directed">
+                </div>
+                <div class="field">
+                  <label>Date of Service</label>
+                  <input required type="date">
+                </div>
+                <div class="field">
+                  <label>Pick-up Time</label>
+                  <input required type="time">
+                </div>
+                <div class="field">
+                  <label>Passenger Count</label>
+                  <select><option>1–2 Passengers (Executive Sedan)</option><option>3–4 Passengers (Luxury SUV)</option><option>5–7 Passengers (Executive Van)</option></select>
+                </div>
+                <div class="field">
+                  <label>Service Type</label>
+                  <select><option>Point-to-Point Transfer</option><option>Hourly As-Directed</option><option>Airport Arrival Meet & Greet</option></select>
+                </div>
+                <div class="field full">
+                  <label>Vehicle Selection</label>
+                  <select id="dash-book-vehicle">
+                    <option>Mercedes-Benz S-Class (First Class Sedan)</option>
+                    <option>BMW 7 Series (Executive Sedan)</option>
+                    <option>Cadillac Escalade ESV (Luxury SUV)</option>
+                    <option>Mercedes-Benz Sprinter (VIP Jet Van)</option>
+                  </select>
+                </div>
+                <div class="field full">
+                  <label>Special Instructions / Flight Details</label>
+                  <textarea placeholder="Flight number, child seats, luggage requirements, or specific route preferences"></textarea>
+                </div>
+              </div>
+
+              <button class="btn primary" style="margin-top:22px;width:100%" type="submit">Confirm & Book Chauffeur →</button>
+            </form>
+          </div>
+
+          <!-- RIGHT COLUMN: FARE ESTIMATE & EXECUTIVE INCLUSIONS PANEL -->
+          <div style="display:grid;gap:20px">
+            
+            <!-- FARE ESTIMATE CARD -->
+            <div style="background:var(--panel);border:1px solid var(--accent);border-radius:18px;padding:24px">
+              <span class="eyebrow">Live Fare Estimate</span>
+              <div style="font:800 36px Manrope;color:var(--accent2);margin:8px 0 4px">$155.00 USD</div>
+              <small class="muted" style="font-size:12px;display:block;margin-bottom:16px">All-inclusive pricing with tolls, taxes & 60-min wait time.</small>
+              
+              <div style="padding-top:14px;border-top:1px solid var(--line);display:grid;gap:8px;font-size:12px">
+                <div style="display:flex;justify-content:space-between"><span class="muted">Base Transfer Rate</span><span>$85.00</span></div>
+                <div style="display:flex;justify-content:space-between"><span class="muted">Flight Radar Tracking</span><span>$15.00</span></div>
+                <div style="display:flex;justify-content:space-between"><span class="muted">Tolls & Airport Fees</span><span>$25.00</span></div>
+                <div style="display:flex;justify-content:space-between"><span class="muted">VIP Cabin Amenities</span><span>$30.00</span></div>
+                <div style="display:flex;justify-content:space-between;font-weight:700;padding-top:8px;border-top:1px dashed var(--line)"><span style="color:var(--accent2)">Account Billing</span><span>NET-30 #AC-9942</span></div>
+              </div>
+            </div>
+
+            <!-- INCLUDED VIP SERVICES CARD -->
+            <div style="background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:24px">
+              <span class="eyebrow">Service Guarantees</span>
+              <h3 style="font-size:18px;margin:8px 0 14px">What's Included</h3>
+              <ul style="margin:0;padding:0;list-style:none;display:grid;gap:12px;font-size:13px;color:var(--text)">
+                <li style="display:flex;gap:10px;align-items:center"><b style="width:20px;height:20px;border-radius:50%;background:#243027;color:#9ed09f;display:grid;place-items:center;font-size:11px">✓</b> 60-Min Complimentary Airport Wait Time</li>
+                <li style="display:flex;gap:10px;align-items:center"><b style="width:20px;height:20px;border-radius:50%;background:#243027;color:#9ed09f;display:grid;place-items:center;font-size:11px">✓</b> Real-Time Flight Delay Auto-Adjustment</li>
+                <li style="display:flex;gap:10px;align-items:center"><b style="width:20px;height:20px;border-radius:50%;background:#243027;color:#9ed09f;display:grid;place-items:center;font-size:11px">✓</b> Professionally Vetted Chauffeur in Formal Suit</li>
+                <li style="display:flex;gap:10px;align-items:center"><b style="width:20px;height:20px;border-radius:50%;background:#243027;color:#9ed09f;display:grid;place-items:center;font-size:11px">✓</b> Onboard High-Speed Wi-Fi & Water</li>
+                <li style="display:flex;gap:10px;align-items:center"><b style="width:20px;height:20px;border-radius:50%;background:#243027;color:#9ed09f;display:grid;place-items:center;font-size:11px">✓</b> 24/7 Priority Corporate Dispatch Desk</li>
+              </ul>
+            </div>
+
+            <!-- NEED ASSISTANCE CARD -->
+            <div style="background:var(--panel2);border:1px solid var(--line);border-radius:18px;padding:20px;text-align:center">
+              <span class="eyebrow">Corporate Support</span>
+              <strong style="display:block;font-size:15px;margin:4px 0">Need Special Vehicle Fleet?</strong>
+              <p class="muted" style="font-size:12px;margin:0 0 14px">For motorcoach, security detail, or multi-city roadshows contact dispatch directly.</p>
+              <button class="btn small" style="width:100%" data-demo-action="Connecting to Corporate Dispatch Hotline +1 (800) 555-CHAUFF">Call Corporate Desk ↗</button>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+
+      <!-- 3. LIVE DISPATCH TRACKING TAB PANEL -->
+      <div id="tab-live-tracking" class="dash-tab-panel">
+        <div class="section-head live-tracking-head" style="align-items:flex-start;text-align:left;margin-bottom:20px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:15px">
+          <div>
+            <span class="eyebrow">Active Journey #CH-9042 · Live Telematics Radar</span>
+            <h2 class="display" style="font-size:clamp(24px, 4vw, 36px);margin:6px 0 0;text-align:left">JFK Terminal 4 → Financial District</h2>
+          </div>
+          <span class="status">Chauffeur En Route · ETA 8 Mins</span>
+        </div>
+
+        <div class="map">
+          <div class="map-route"></div>
+          <div class="pin one"></div>
+          <div class="pin two"></div>
+          <div class="map-label one">JFK Airport Terminal 4</div>
+          <div class="map-label two">Wall Street Financial District</div>
+        </div>
+
+        <div class="live-chauffeur-card" style="background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:24px;margin-top:20px">
+          <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:15px;margin-bottom:18px">
+            <div>
+              <strong style="font-size:18px">Chauffeur: Michael R.</strong>
+              <div style="font-size:13px;color:var(--muted)">Mercedes-Benz S-Class (Black) · License Plate: #EX-889-NY</div>
+            </div>
+            <div class="live-action-btns" style="display:flex;gap:10px;flex-wrap:wrap">
+              <button class="btn small" data-demo-action="SMS sent to Chauffeur Michael R.">Message Chauffeur</button>
+              <button class="btn small primary" data-demo-action="Calling Dispatch Line +1 (800) 555-CHAUFF">Call Dispatch</button>
+            </div>
+          </div>
+
+          <div class="telematics-grid" style="display:grid;grid-template-columns:repeat(4,1fr);gap:14px;padding-top:16px;border-top:1px solid var(--line)">
+            <div><span class="muted" style="font-size:11px">FLIGHT STATUS</span><strong style="display:block;font-size:13px;color:#9ed09f">AF-102 Landed (On-Time)</strong></div>
+            <div><span class="muted" style="font-size:11px">SPEED</span><strong style="display:block;font-size:13px">42 mph</strong></div>
+            <div><span class="muted" style="font-size:11px">CABIN TEMP</span><strong style="display:block;font-size:13px">70°F Climate Control</strong></div>
+            <div><span class="muted" style="font-size:11px">DISPATCH NOTE</span><strong style="display:block;font-size:13px">Meet at Curb 3</strong></div>
+          </div>
+        </div>
+
+        <!-- TRIP STAGES TIMELINE -->
+        <div style="background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:22px;margin-top:20px">
+          <span class="eyebrow">Trip Progress Timeline</span>
+          <div class="timeline-grid" style="display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-top:15px;text-align:center">
+            <div style="padding:10px;background:var(--panel2);border-radius:10px;border:1px solid var(--accent)">
+              <span style="font-size:10px;color:var(--accent2);display:block">STEP 1</span>
+              <strong style="font-size:12px">Confirmed ✓</strong>
+            </div>
+            <div style="padding:10px;background:var(--panel2);border-radius:10px;border:1px solid var(--accent)">
+              <span style="font-size:10px;color:var(--accent2);display:block">STEP 2</span>
+              <strong style="font-size:12px">Assigned ✓</strong>
+            </div>
+            <div style="padding:10px;background:var(--panel2);border-radius:10px;border:1px solid var(--accent)">
+              <span style="font-size:10px;color:var(--accent2);display:block">STEP 3</span>
+              <strong style="font-size:12px">Flight Landed ✓</strong>
+            </div>
+            <div style="padding:10px;background:var(--panel2);border-radius:10px;border:1px solid var(--accent)">
+              <span style="font-size:10px;color:var(--accent2);display:block">STEP 4</span>
+              <strong style="font-size:12px">En Route ●</strong>
+            </div>
+            <div style="padding:10px;background:var(--panel2);border-radius:10px;opacity:0.5">
+              <span style="font-size:10px;color:var(--muted);display:block">STEP 5</span>
+              <strong style="font-size:12px">Completed</strong>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4. RIDE HISTORY TAB PANEL -->
+      <div id="tab-history" class="dash-tab-panel">
+        <div class="section-head" style="align-items:flex-start;text-align:left;margin-bottom:20px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:15px;max-width:100%">
+          <div>
+            <span class="eyebrow">Travel Log</span>
+            <h2 class="display" style="font-size:clamp(24px, 4vw, 36px);margin:6px 0 0;text-align:left">Recent Completed Journeys</h2>
+            <p class="muted" style="margin:4px 0 0">Review completed travel logs and download tax receipts.</p>
+          </div>
+          <button class="btn small" data-demo-action="Exporting ride log to CSV...">Export CSV Log ↗</button>
+        </div>
+
+        <div class="table-wrapper">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Trip ID</th>
+                <th>Route</th>
+                <th>Vehicle Class</th>
+                <th>Chauffeur</th>
+                <th>Fare</th>
+                <th>Status</th>
+                <th>Invoice PDF</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>18 Sep 2026</td>
+                <td>#CH-8910</td>
+                <td>JFK Airport → Midtown Hotel</td>
+                <td>S-Class Sedan</td>
+                <td>Michael R.</td>
+                <td>$155.00</td>
+                <td><span class="status">Completed</span></td>
+                <td><button class="btn small" data-demo-action="Downloading Invoice #CH-8910.pdf">PDF ↗</button></td>
+              </tr>
+              <tr>
+                <td>14 Sep 2026</td>
+                <td>#CH-8742</td>
+                <td>Office HQ → Client Summit</td>
+                <td>BMW 7 Series</td>
+                <td>David K.</td>
+                <td>$120.00</td>
+                <td><span class="status">Completed</span></td>
+                <td><button class="btn small" data-demo-action="Downloading Invoice #CH-8742.pdf">PDF ↗</button></td>
+              </tr>
+              <tr>
+                <td>10 Sep 2026</td>
+                <td>#CH-8520</td>
+                <td>Plaza Hotel → JFK Terminal 7</td>
+                <td>Escalade SUV</td>
+                <td>Sarah B.</td>
+                <td>$195.00</td>
+                <td><span class="status">Completed</span></td>
+                <td><button class="btn small" data-demo-action="Downloading Invoice #CH-8520.pdf">PDF ↗</button></td>
+              </tr>
+              <tr>
+                <td>04 Sep 2026</td>
+                <td>#CH-8311</td>
+                <td>Hourly As-Directed (4 Hrs)</td>
+                <td>S-Class Sedan</td>
+                <td>Michael R.</td>
+                <td>$380.00</td>
+                <td><span class="status">Completed</span></td>
+                <td><button class="btn small" data-demo-action="Downloading Invoice #CH-8311.pdf">PDF ↗</button></td>
+              </tr>
+              <tr>
+                <td>28 Aug 2026</td>
+                <td>#CH-8109</td>
+                <td>Teterboro Airport → Wall St HQ</td>
+                <td>Maybach S680</td>
+                <td>Robert M.</td>
+                <td>$420.00</td>
+                <td><span class="status">Completed</span></td>
+                <td><button class="btn small" data-demo-action="Downloading Invoice #CH-8109.pdf">PDF ↗</button></td>
+              </tr>
+              <tr>
+                <td>20 Aug 2026</td>
+                <td>#CH-7980</td>
+                <td>EWR Airport → Tribeca Penthouse</td>
+                <td>BMW 7 Series</td>
+                <td>David K.</td>
+                <td>$165.00</td>
+                <td><span class="status">Completed</span></td>
+                <td><button class="btn small" data-demo-action="Downloading Invoice #CH-7980.pdf">PDF ↗</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- 5. SAVED ADDRESSES TAB PANEL -->
+      <div id="tab-saved-locations" class="dash-tab-panel">
+        <div class="section-head" style="align-items:flex-start;text-align:left;margin-bottom:20px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:15px;max-width:100%">
+          <div>
+            <span class="eyebrow">Quick Select</span>
+            <h2 class="display" style="font-size:clamp(24px, 4vw, 36px);margin:6px 0 0;text-align:left">Saved Corporate Addresses</h2>
+            <p class="muted" style="margin:4px 0 0">One-click pickup locations for frequent corporate rides.</p>
+          </div>
+          <button class="btn small primary" data-demo-action="Opening Address Creation Dialog...">+ Add New Address</button>
+        </div>
+
+        <div class="grid3">
+          <div class="card card-body">
+            <span class="badge">Headquarters</span>
+            <h3>Manhattan Office</h3>
+            <p>1 Wall Street, Floor 42, New York, NY 10005</p>
+            <button class="btn small open-book" style="margin-top:14px;width:100%">Book Pick-up Here</button>
+          </div>
+          <div class="card card-body">
+            <span class="badge">Primary Airport</span>
+            <h3>JFK Terminal 4</h3>
+            <p>Arrivals Hall, International Flights Gate D</p>
+            <button class="btn small open-book" style="margin-top:14px;width:100%">Book Pick-up Here</button>
+          </div>
+          <div class="card card-body">
+            <span class="badge">Executive Hotel</span>
+            <h3>The Plaza Hotel</h3>
+            <p>768 Fifth Ave, New York, NY 10019</p>
+            <button class="btn small open-book" style="margin-top:14px;width:100%">Book Pick-up Here</button>
+          </div>
+          <div class="card card-body">
+            <span class="badge">Private Aviation</span>
+            <h3>Teterboro Airport (KTEB)</h3>
+            <p>Signature Flight Support Hangar 4, Teterboro, NJ</p>
+            <button class="btn small open-book" style="margin-top:14px;width:100%">Book Pick-up Here</button>
+          </div>
+          <div class="card card-body">
+            <span class="badge">Executive Residence</span>
+            <h3>Greenwich Estate</h3>
+            <p>42 Round Hill Road, Greenwich, CT 06831</p>
+            <button class="btn small open-book" style="margin-top:14px;width:100%">Book Pick-up Here</button>
+          </div>
+          <div class="card card-body">
+            <span class="badge">Coastal Retreat</span>
+            <h3>Southampton House</h3>
+            <p>100 Meadow Lane, Southampton, NY 11968</p>
+            <button class="btn small open-book" style="margin-top:14px;width:100%">Book Pick-up Here</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 6. INVOICES & RECEIPTS TAB PANEL -->
+      <div id="tab-billing-section" class="dash-tab-panel">
+        <div class="section-head" style="align-items:flex-start;text-align:left;margin-bottom:20px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:15px;max-width:100%">
+          <div>
+            <span class="eyebrow">Corporate Account Billing</span>
+            <h2 class="display" style="font-size:clamp(24px, 4vw, 36px);margin:6px 0 0;text-align:left">Invoices & Tax Receipts</h2>
+            <p class="muted" style="margin:4px 0 0">NET-30 billing history and Concur auto-expense synchronization.</p>
+          </div>
+          <button class="btn small" data-demo-action="Exporting monthly statement PDF...">Export Statement PDF ↗</button>
+        </div>
+
+        <div style="background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:24px;margin-bottom:30px">
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:20px">
+            <div><span class="muted" style="font-size:11px">CURRENT STATEMENT BALANCE</span><strong style="display:block;font:800 26px Manrope;color:var(--accent2);margin-top:4px">$2,450.00 USD</strong></div>
+            <div><span class="muted" style="font-size:11px">PAYMENT TERMS</span><strong style="display:block;font-size:15px;margin-top:6px">NET-30 Corporate Credit</strong></div>
+            <div><span class="muted" style="font-size:11px">EXPENSE SYNC</span><div style="margin-top:6px"><span class="status">SAP Concur Active</span></div></div>
+            <div><span class="muted" style="font-size:11px">NEXT DUE DATE</span><strong style="display:block;font-size:15px;margin-top:6px">30 Sep 2026</strong></div>
+          </div>
+        </div>
+
+        <div class="table-wrapper">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Statement Month</th>
+                <th>Invoice #</th>
+                <th>Total Rides</th>
+                <th>Amount</th>
+                <th>Payment Status</th>
+                <th>Download Tax PDF</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>August 2026</td>
+                <td>#INV-2026-08</td>
+                <td>14 Journeys</td>
+                <td>$2,140.00</td>
+                <td><span class="status">Paid</span></td>
+                <td><button class="btn small" data-demo-action="Downloading Statement #INV-2026-08.pdf">PDF ↗</button></td>
+              </tr>
+              <tr>
+                <td>July 2026</td>
+                <td>#INV-2026-07</td>
+                <td>18 Journeys</td>
+                <td>$3,290.00</td>
+                <td><span class="status">Paid</span></td>
+                <td><button class="btn small" data-demo-action="Downloading Statement #INV-2026-07.pdf">PDF ↗</button></td>
+              </tr>
+              <tr>
+                <td>June 2026</td>
+                <td>#INV-2026-06</td>
+                <td>11 Journeys</td>
+                <td>$1,850.00</td>
+                <td><span class="status">Paid</span></td>
+                <td><button class="btn small" data-demo-action="Downloading Statement #INV-2026-06.pdf">PDF ↗</button></td>
+              </tr>
+              <tr>
+                <td>May 2026</td>
+                <td>#INV-2026-05</td>
+                <td>16 Journeys</td>
+                <td>$2,910.00</td>
+                <td><span class="status">Paid</span></td>
+                <td><button class="btn small" data-demo-action="Downloading Statement #INV-2026-05.pdf">PDF ↗</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </section>
+  </main>
+
+  <button class="backtop" aria-label="Back to top">↑</button>
+  <div class="mobile-cta"><button class="btn primary open-book">Book a Ride</button></div>
+
+  <!-- BOOKING MODAL -->
+  <div class="modal">
+    <div class="modal-box">
+      <button class="modal-close" aria-label="Close modal">×</button>
+      <span class="eyebrow">Reservation request</span>
+      <h2 class="display" style="font-size:36px;margin:10px 0 20px">Book your journey.</h2>
+      <form data-demo data-message="Booking request received. We’ll confirm availability shortly.">
+        <div class="form-grid">
+          <div class="field"><label>Pickup</label><input required placeholder="Airport, hotel or address"></div>
+          <div class="field"><label>Destination</label><input required placeholder="Where are you going?"></div>
+          <div class="field"><label>Date</label><input required type="date"></div>
+          <div class="field"><label>Time</label><input required type="time"></div>
+          <div class="field"><label>Passengers</label><select><option>1–2</option><option>3–4</option><option>5–7</option></select></div>
+          <div class="field"><label>Vehicle</label><select><option>S-Class</option><option>BMW 7 Series</option><option>Luxury SUV</option><option>Executive Van</option></select></div>
+          <div class="field full"><label>Notes</label><textarea placeholder="Flight number, child seat, luggage or special request"></textarea></div>
+        </div>
+        <button class="btn primary" style="margin-top:18px;width:100%" type="submit">Request Chauffeur</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- DASHBOARD WELCOME CONFIRMATION MODAL -->
+  <div id="dash-welcome-modal" class="confirm-modal open">
+    <div class="confirm-box">
+      <span class="eyebrow">Session Active</span>
+      <h3 class="display" style="font-size:22px;margin:8px 0 10px">Welcome back, Alex</h3>
+      <p class="muted" style="font-size:13px;margin:0 0 20px">Connected to Acme Corp Executive Account (#AC-9942). Live dispatch and ride tracking ready.</p>
+      <button class="btn primary small" id="close-welcome-btn" style="width:100%">OK, Continue →</button>
+    </div>
+  </div>
+
+  <!-- DASHBOARD SIGNOUT CONFIRMATION MODAL -->
+  <div id="dash-signout-modal" class="confirm-modal">
+    <div class="confirm-box">
+      <span class="eyebrow" style="color:var(--accent2)">Sign Out Confirmation</span>
+      <h3 class="display" style="font-size:22px;margin:8px 0 10px">Ready to Sign Out?</h3>
+      <p class="muted" style="font-size:13px;margin:0 0 20px">Are you sure you want to sign out of your executive chauffeur portal?</p>
+      <div style="display:flex;gap:10px">
+        <button class="btn small" id="cancel-signout-btn" style="flex:1">Cancel</button>
+        <button class="btn primary small" id="confirm-signout-btn" style="flex:1">Yes, Sign Out</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast"></div>
+  <script src="script.js"></script>
+</body>
+</html>
