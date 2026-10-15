@@ -7,47 +7,585 @@
   <title>Client Portal Dashboard · Chauffeur.</title>
   <link rel="icon" type="image/png" href="favicon.png">
   <link rel="stylesheet" href="style.css">
+  <style>
+    /* ========================================================
+       EXECUTIVE DASHBOARD SIDEBAR (PINNED 100VH TO VIEWPORT)
+       ======================================================== */
+    .dash {
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      min-height: 100vh;
+      align-items: start;
+      width: 100%;
+      background: var(--bg);
+    }
+
+    /* Sidebar is pinned to viewport so bottom controls are always visible */
+    .side {
+      background: #090a0b !important;
+      border-right: 1px solid rgba(255, 255, 255, 0.08) !important;
+      border-left: none !important;
+      color: #f5f3ee;
+      display: flex !important;
+      flex-direction: column !important;
+      justify-content: space-between !important;
+      height: 100vh !important;
+      max-height: 100vh !important;
+      min-height: 0 !important;
+      padding: 22px 14px 18px !important;
+      box-sizing: border-box !important;
+      position: sticky !important;
+      top: 0 !important;
+      align-self: start !important;
+      z-index: 100 !important;
+      overflow-y: auto !important;
+      overflow-x: hidden !important;
+    }
+
+    .side::-webkit-scrollbar {
+      width: 4px;
+    }
+    .side::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    .side::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.12);
+      border-radius: 4px;
+    }
+    .side::-webkit-scrollbar-thumb:hover {
+      background: rgba(255, 255, 255, 0.25);
+    }
+
+    html[data-theme="light"] .side {
+      background: #090a0b !important;
+      border-right: 1px solid rgba(255, 255, 255, 0.08) !important;
+    }
+
+    html[dir="rtl"] .side {
+      border-right: none !important;
+      border-left: 1px solid rgba(255, 255, 255, 0.08) !important;
+    }
+
+    /* Top Logo & Close Row */
+    .side-top-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 4px 16px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      margin-bottom: 18px;
+      flex-shrink: 0;
+    }
+
+    .side .brand {
+      display: inline-flex !important;
+      align-items: center !important;
+      gap: 10px !important;
+      text-decoration: none;
+      flex-shrink: 0;
+    }
+
+    .side .brand-favicon {
+      width: 30px !important;
+      height: 30px !important;
+      border-radius: 50% !important;
+      object-fit: contain !important;
+      display: block;
+    }
+
+    .side .brand-text {
+      font-family: 'Manrope', sans-serif !important;
+      font-size: 19px !important;
+      font-weight: 800 !important;
+      color: #ffffff !important;
+      letter-spacing: -0.03em !important;
+      line-height: 1 !important;
+      white-space: nowrap !important;
+    }
+
+    .side .brand-text .dot {
+      color: #e6b17b !important;
+    }
+
+    .side-close-btn {
+      display: none;
+      background: none;
+      border: none;
+      color: #ffffff !important;
+      font-size: 24px;
+      cursor: pointer;
+      line-height: 1;
+      padding: 4px 6px;
+      transition: opacity 0.2s;
+    }
+
+    .side-close-btn:hover {
+      opacity: 0.7;
+    }
+
+    /* Sidemenu Links */
+    .side-nav {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      flex-shrink: 0;
+    }
+
+    .side .eyebrow,
+    .side .side-heading {
+      display: block !important;
+      color: #e6b17b !important;
+      font-size: 11px !important;
+      font-weight: 800 !important;
+      letter-spacing: 0.18em !important;
+      text-transform: uppercase !important;
+      padding: 0 10px 8px !important;
+      margin: 0 !important;
+    }
+
+    .side a {
+      display: block;
+      padding: 10px 14px;
+      border-radius: 10px;
+      color: #8c9296 !important;
+      font-size: 13px;
+      font-weight: 500;
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+
+    .side a:hover {
+      background: rgba(255, 255, 255, 0.06) !important;
+      color: #ffffff !important;
+    }
+
+    .side a.active {
+      background: #191c1f !important;
+      color: #ffffff !important;
+      font-weight: 600 !important;
+    }
+
+    /* Bottom Section */
+    .side-bottom-section {
+      margin-top: auto;
+      padding-top: 14px;
+      flex-shrink: 0;
+    }
+
+    .side-signout-row {
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 12px 6px 12px;
+    }
+
+    .side-signout-btn {
+      color: #e6b17b !important;
+      font-weight: 700 !important;
+      font-size: 13px !important;
+      text-decoration: none;
+      display: inline-block;
+      padding: 0 !important;
+      transition: color 0.2s ease;
+    }
+
+    .side-signout-btn:hover {
+      color: #d58b4d !important;
+      background: transparent !important;
+    }
+
+    /* User & Controls Capsule (Exact Match with Reference Image) */
+    .side-user-bar {
+      display: flex !important;
+      align-items: center !important;
+      justify-content: space-between !important;
+      gap: 6px !important;
+      background: #0d0f12 !important;
+      border: 1px solid rgba(255, 255, 255, 0.12) !important;
+      border-radius: 999px !important;
+      padding: 4px 6px !important;
+      box-sizing: border-box !important;
+      width: 100% !important;
+    }
+
+    .side-user-bar .user-chip {
+      display: flex !important;
+      align-items: center !important;
+      gap: 8px !important;
+      background: #181b1f !important;
+      border: 1px solid rgba(255, 255, 255, 0.08) !important;
+      border-radius: 999px !important;
+      padding: 3px 10px 3px 4px !important;
+      flex: 1 !important;
+      min-width: 0 !important;
+      box-sizing: border-box !important;
+      transition: background 0.2s ease;
+    }
+
+    .side-user-bar .user-avatar {
+      width: 28px !important;
+      height: 28px !important;
+      border-radius: 50% !important;
+      object-fit: cover !important;
+      border: 1.5px solid #d4a373 !important;
+      flex-shrink: 0 !important;
+      display: block !important;
+    }
+
+    .side-user-bar .user-info {
+      display: flex !important;
+      flex-direction: column !important;
+      line-height: 1.15 !important;
+      overflow: hidden !important;
+      min-width: 0 !important;
+    }
+
+    .side-user-bar .user-info strong {
+      font-size: 12px !important;
+      color: #ffffff !important;
+      font-weight: 700 !important;
+      white-space: nowrap !important;
+      overflow: hidden !important;
+      text-overflow: ellipsis !important;
+    }
+
+    .side-user-bar .user-info span {
+      font-size: 9.5px !important;
+      color: #e6b17b !important;
+      font-weight: 700 !important;
+      white-space: nowrap !important;
+      overflow: hidden !important;
+      text-overflow: ellipsis !important;
+    }
+
+    .side-user-bar .theme-toggle,
+    .side-user-bar .dir-toggle {
+      width: 32px !important;
+      height: 32px !important;
+      min-width: 32px !important;
+      min-height: 32px !important;
+      border-radius: 50% !important;
+      background: #181b1f !important;
+      border: 1px solid rgba(255, 255, 255, 0.10) !important;
+      color: #ffffff !important;
+      display: grid !important;
+      place-items: center !important;
+      padding: 0 !important;
+      cursor: pointer !important;
+      transition: all 0.2s ease !important;
+      line-height: 1 !important;
+      flex-shrink: 0 !important;
+    }
+
+    .side-user-bar .theme-toggle {
+      font-size: 14px !important;
+    }
+
+    .side-user-bar .dir-toggle {
+      font-size: 9.5px !important;
+      font-weight: 800 !important;
+      letter-spacing: -0.02em !important;
+    }
+
+    .side-user-bar .theme-toggle:hover,
+    .side-user-bar .dir-toggle:hover {
+      background: #24282e !important;
+      border-color: #e6b17b !important;
+      color: #e6b17b !important;
+      transform: translateY(-1px);
+    }
+
+    /* Main Dashboard Clean Spacing (No floating corner header) */
+    .dash-main {
+      padding: 35px 40px 40px !important;
+      min-width: 0;
+      max-width: 100%;
+      width: 100%;
+      box-sizing: border-box;
+      overflow-x: hidden;
+    }
+
+    /* ========================================================
+       ACTIVE JOURNEY LIVE TELEMATICS & STATUS BADGE (PREMIUM)
+       ======================================================== */
+    .active-ride-grid {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 20px 32px;
+      background: var(--panel2);
+      padding: 18px 24px;
+      border-radius: 14px;
+      border: 1px solid var(--line);
+    }
+
+    .active-meta-item {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .active-meta-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      line-height: 1;
+    }
+
+    .active-meta-val {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1.3;
+    }
+
+    /* Live Telematics Status Pill & Inline Alignment (Exact Match with Reference Image) */
+    .active-meta-item.active-status-col {
+      flex-direction: row !important;
+      align-items: center !important;
+      gap: 12px !important;
+      margin-left: auto;
+    }
+
+    .active-meta-item.active-status-col .active-meta-label {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    /* Live Telematics Status Pill */
+    .live-status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      padding: 7px 15px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, rgba(16, 185, 129, 0.16), rgba(5, 150, 105, 0.08));
+      color: #34d399;
+      border: 1px solid rgba(16, 185, 129, 0.42);
+      box-shadow: 0 2px 14px rgba(16, 185, 129, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+      font-size: 12.5px;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      width: fit-content;
+      white-space: nowrap;
+      transition: all 0.25s ease;
+    }
+
+    .live-status-badge:hover {
+      border-color: rgba(16, 185, 129, 0.6);
+      box-shadow: 0 4px 18px rgba(16, 185, 129, 0.28);
+      transform: translateY(-1px);
+    }
+
+    html[data-theme="light"] .live-status-badge {
+      background: linear-gradient(135deg, #e6f9f0, #d5f4e6);
+      color: #065f46;
+      border-color: #6ee7b7;
+      box-shadow: 0 2px 10px rgba(16, 185, 129, 0.15);
+    }
+
+    /* Pulsing Live Radar Indicator */
+    .radar-dot {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 8px;
+      height: 8px;
+      flex-shrink: 0;
+    }
+
+    .radar-ping {
+      position: absolute;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: #10b981;
+      opacity: 0.75;
+      animation: liveRadarPing 1.8s cubic-bezier(0, 0, 0.2, 1) infinite;
+    }
+
+    .radar-core {
+      position: relative;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #10b981;
+      box-shadow: 0 0 10px #10b981;
+    }
+
+    @keyframes liveRadarPing {
+      0% {
+        transform: scale(0.6);
+        opacity: 0.9;
+      }
+      70%, 100% {
+        transform: scale(2.2);
+        opacity: 0;
+      }
+    }
+
+    @media (max-width: 680px) {
+      .active-meta-item.active-status-col {
+        margin-left: 0;
+        width: 100%;
+        justify-content: space-between;
+      }
+    }
+
+    /* Polished Global Status Pill */
+    .status {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 11px;
+      border-radius: 999px;
+      background: rgba(16, 185, 129, 0.12);
+      color: #34d399;
+      border: 1px solid rgba(16, 185, 129, 0.28);
+      font-size: 11.5px;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      line-height: 1.2;
+    }
+
+    html[data-theme="light"] .status {
+      background: #e6f7ef;
+      color: #065f46;
+      border-color: #a3e6c5;
+    }
+
+    /* Floating Hamburger Button for Mobile / Responsive Drawer */
+    .dash-mobile-trigger {
+      display: none;
+    }
+
+    /* Responsive Drawer Styles (360px & 768px Viewports) */
+    @media (max-width: 780px) {
+      .dash {
+        grid-template-columns: 1fr !important;
+      }
+
+      .dash-mobile-trigger {
+        display: inline-flex !important;
+        position: fixed;
+        top: 14px;
+        right: 14px;
+        z-index: 1500;
+        width: 42px;
+        height: 42px;
+        border-radius: 50%;
+        background: var(--panel);
+        border: 1px solid var(--line);
+        color: var(--text);
+        align-items: center;
+        justify-content: center;
+        font-size: 18px;
+        cursor: pointer;
+        box-shadow: 0 4px 18px rgba(0, 0, 0, 0.35);
+        transition: transform 0.2s ease, border-color 0.2s ease;
+      }
+
+      .dash-mobile-trigger:hover {
+        border-color: var(--accent);
+        transform: scale(1.05);
+      }
+
+      html[dir="rtl"] .dash-mobile-trigger {
+        right: auto;
+        left: 14px;
+      }
+
+      .side {
+        display: none !important;
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        bottom: 0 !important;
+        width: 280px !important;
+        max-width: 85vw !important;
+        height: 100vh !important;
+        background: #090a0b !important;
+        border-right: 1px solid rgba(255, 255, 255, 0.08) !important;
+        border-left: none !important;
+        z-index: 2000 !important;
+        padding: 22px 16px !important;
+        box-shadow: 0 0 50px rgba(0, 0, 0, 0.8) !important;
+        overflow-y: auto !important;
+      }
+
+      html[dir="rtl"] .side {
+        left: auto !important;
+        right: 0 !important;
+        border-right: none !important;
+        border-left: 1px solid rgba(255, 255, 255, 0.08) !important;
+      }
+
+      .side.open {
+        display: flex !important;
+        animation: slideInSide 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
+      }
+
+      .side-close-btn {
+        display: inline-flex !important;
+      }
+
+      .dash-main {
+        padding: 70px 4% 30px !important;
+      }
+    }
+  </style>
 </head>
 <body>
-  <!-- FIXED TOP RIGHT CORNER CONTROLS (USER DETAILS, THEME & RTL) -->
-  <div class="dash-top-corner">
-    <div class="user-chip">
-      <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=120&q=80" alt="Alex R." class="user-avatar">
-      <div class="user-info">
-        <strong>Alex R.</strong>
-        <span>Acme Corp VIP</span>
-      </div>
-    </div>
-    <button class="theme-toggle" type="button" aria-label="Switch theme">☀</button>
-    <button class="dir-toggle" type="button" aria-label="Switch text direction">RTL</button>
-    <button class="menu dash-menu-toggle" type="button" aria-label="Open sidebar menu">☰</button>
-  </div>
+  <!-- MOBILE HAMBURGER TOGGLE BUTTON -->
+  <button class="menu dash-menu-toggle dash-mobile-trigger" type="button" aria-label="Open sidebar menu">☰</button>
 
   <main class="dash">
-    <!-- SIDEBAR NAV WITH BRAND LOGO AT TOP (TOUCHES BOTTOM ALWAYS) -->
-    <aside class="side">
-      <div style="display:flex;justify-content:space-between;align-items:center;padding:0 12px 20px;border-bottom:1px solid var(--line);margin-bottom:20px">
-        <a class="brand" href="index.html">
+    <!-- SIDEBAR NAV WITH BRAND LOGO AT TOP & USER CONTROLS AT BOTTOM -->
+    <aside class="side" id="dash-sidebar">
+      <!-- TOP LOGO & CLOSE BUTTON -->
+      <div class="side-top-row">
+        <a class="brand" href="index.html" aria-label="Chauffeur Home">
           <img src="favicon.png" alt="CHAUFFEUR." class="brand-favicon">
           <span class="brand-text">CHAUFFEUR<span class="dot">.</span></span>
         </a>
         <button class="side-close-btn" type="button" aria-label="Close menu">×</button>
       </div>
-      <span class="eyebrow" style="padding:0 12px">Client Portal</span>
-      <a class="active" href="#overview" data-dash-tab="overview">Overview</a>
-      <a href="#quick-book" data-dash-tab="quick-book">Book a Ride</a>
-      <a href="#live-tracking" data-dash-tab="live-tracking">Live Dispatch Tracking</a>
-      <a href="#history" data-dash-tab="history">Ride History</a>
-      <a href="#saved-locations" data-dash-tab="saved-locations">Saved Addresses</a>
-      <a href="#billing-section" data-dash-tab="billing-section">Invoices & Receipts</a>
+
+      <!-- NAVIGATION LINKS -->
+      <div class="side-nav">
+        <span class="eyebrow side-heading">Client Portal</span>
+        <a class="active" href="#overview" data-dash-tab="overview">Overview</a>
+        <a href="#quick-book" data-dash-tab="quick-book">Book a Ride</a>
+        <a href="#live-tracking" data-dash-tab="live-tracking">Live Dispatch Tracking</a>
+        <a href="#history" data-dash-tab="history">Ride History</a>
+        <a href="#saved-locations" data-dash-tab="saved-locations">Saved Addresses</a>
+        <a href="#billing-section" data-dash-tab="billing-section">Invoices & Receipts</a>
+      </div>
       
-      <div style="margin-top:15px;padding-top:15px;border-top:1px solid var(--line)">
-        <a href="#" id="open-signout-modal" style="color:var(--accent2);font-weight:700">Sign Out</a>
+      <!-- BOTTOM ACTIONS & USER BAR -->
+      <div class="side-bottom-section">
+        <div class="side-signout-row">
+          <a href="#" id="open-signout-modal" class="side-signout-btn">Sign Out</a>
+        </div>
+        <div class="side-user-bar">
+          <div class="user-chip">
+            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=120&q=80" alt="Alex R." class="user-avatar">
+            <div class="user-info">
+              <strong>Alex R.</strong>
+              <span>Acme Corp VIP</span>
+            </div>
+          </div>
+          <button class="theme-toggle" type="button" aria-label="Switch theme">☀</button>
+          <button class="dir-toggle" type="button" aria-label="Switch text direction">RTL</button>
+        </div>
       </div>
     </aside>
 
     <!-- MAIN DASHBOARD CONTENT PANELS -->
-    <section class="dash-main" style="padding-top:75px">
+    <section class="dash-main">
       
       <!-- 1. OVERVIEW TAB PANEL -->
       <div id="tab-overview" class="dash-tab-panel active">
@@ -88,17 +626,32 @@
 
         <!-- ACTIVE RIDE SUMMARY CARD -->
         <div style="background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:24px;margin-top:30px">
-          <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:15px;margin-bottom:15px">
+          <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:15px;margin-bottom:18px">
             <div>
               <span class="eyebrow">Active Journey #CH-9042 · Live Radar</span>
               <h3 class="display" style="font-size:24px;margin:4px 0 0">JFK Terminal 4 → Financial District</h3>
             </div>
             <button class="btn small primary" data-switch-tab="live-tracking">Live Dispatch Tracking →</button>
           </div>
-          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:15px;background:var(--panel2);padding:16px;border-radius:12px;border:1px solid var(--line)">
-            <div><span class="muted" style="font-size:11px">CHAUFFEUR</span><strong style="display:block;font-size:14px">Michael R.</strong></div>
-            <div><span class="muted" style="font-size:11px">VEHICLE</span><strong style="display:block;font-size:14px">Mercedes S-Class (#EX-889)</strong></div>
-            <div><span class="muted" style="font-size:11px">STATUS</span><span class="status">En Route · ETA 8 Mins</span></div>
+          <div class="active-ride-grid">
+            <div class="active-meta-item">
+              <span class="active-meta-label">CHAUFFEUR</span>
+              <strong class="active-meta-val">Michael R.</strong>
+            </div>
+            <div class="active-meta-item">
+              <span class="active-meta-label">VEHICLE</span>
+              <strong class="active-meta-val">Mercedes S-Class (#EX-889)</strong>
+            </div>
+            <div class="active-meta-item active-status-col">
+              <span class="active-meta-label">STATUS</span>
+              <div class="live-status-badge">
+                <span class="radar-dot">
+                  <span class="radar-ping"></span>
+                  <span class="radar-core"></span>
+                </span>
+                <span>En Route · ETA 8 Mins</span>
+              </div>
+            </div>
           </div>
         </div>
 

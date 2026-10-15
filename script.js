@@ -12,7 +12,27 @@ $$('.reveal').forEach(e=>io.observe(e));
 const topBtn=$('.backtop'); if(topBtn){addEventListener('scroll',()=>topBtn.classList.toggle('show',scrollY>650));topBtn.onclick=()=>scrollTo({top:0,behavior:'smooth'})}
 
 // Booking Modal logic
-const modal=$('.modal'); $$('.open-book').forEach(b=>b.addEventListener('click',()=>modal?.classList.add('open'))); $('.modal-close')?.addEventListener('click',()=>modal.classList.remove('open')); modal?.addEventListener('click',e=>{if(e.target===modal)modal.classList.remove('open')});
+const modal=$('.modal');
+document.addEventListener('click', (e) => {
+  const b = e.target.closest('.open-book');
+  if (b) {
+    modal?.classList.add('open');
+    const v = b.dataset.vehicle;
+    if (v && modal) {
+      const select = modal.querySelector('#modal-vehicle-select, select:nth-of-type(2)');
+      if (select) {
+        for (let opt of select.options) {
+          if (opt.text.toLowerCase().includes(v.toLowerCase()) || v.toLowerCase().includes(opt.text.toLowerCase())) {
+            opt.selected = true;
+            break;
+          }
+        }
+      }
+    }
+  }
+});
+$('.modal-close')?.addEventListener('click',()=>modal?.classList.remove('open'));
+modal?.addEventListener('click',e=>{if(e.target===modal)modal.classList.remove('open')});
 
 // Toast notification helper
 function toast(msg){let t=$('.toast');if(!t){t=document.createElement('div');t.className='toast';document.body.append(t)}t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2800)}
@@ -25,31 +45,49 @@ $$('[data-demo-action]').forEach(b=>b.addEventListener('click',()=>toast(b.datas
 const year=$('[data-year]');if(year)year.textContent=new Date().getFullYear();
 
 // Theme switcher (Dark / Light)
+// Theme switcher (Dark / Light)
 const root=document.documentElement;
-const themeButton=document.querySelector('.theme-toggle');
 const savedTheme=localStorage.getItem('chauffeur-theme');
 if(savedTheme==='light'||savedTheme==='dark') root.dataset.theme=savedTheme;
-function syncThemeIcon(){if(!themeButton)return; const dark=root.dataset.theme!=='light'; themeButton.textContent=dark?'☀':'☾'; themeButton.setAttribute('aria-label',dark?'Switch to light theme':'Switch to dark theme'); themeButton.title=themeButton.getAttribute('aria-label')}
+function syncThemeIcon(){
+  const dark=root.dataset.theme!=='light';
+  $$('.theme-toggle').forEach(btn => {
+    btn.textContent=dark?'☀':'☾';
+    btn.setAttribute('aria-label',dark?'Switch to light theme':'Switch to dark theme');
+    btn.title=btn.getAttribute('aria-label');
+  });
+}
 syncThemeIcon();
-themeButton?.addEventListener('click',()=>{root.dataset.theme=root.dataset.theme==='light'?'dark':'light';localStorage.setItem('chauffeur-theme',root.dataset.theme);syncThemeIcon();toast(root.dataset.theme==='dark'?'Dark theme enabled':'Light theme enabled')});
+document.addEventListener('click', (e) => {
+  const btn = e.target.closest('.theme-toggle');
+  if (btn) {
+    root.dataset.theme=root.dataset.theme==='light'?'dark':'light';
+    localStorage.setItem('chauffeur-theme',root.dataset.theme);
+    syncThemeIcon();
+    toast(root.dataset.theme==='dark'?'Dark theme enabled':'Light theme enabled');
+  }
+});
 
 // RTL / LTR Direction switcher — persists user choice
-const dirButton=document.querySelector('.dir-toggle');
 const savedDir=localStorage.getItem('chauffeur-dir');
 if(savedDir==='rtl'||savedDir==='ltr') root.dir=savedDir; else root.dir='ltr';
 function syncDirIcon(){
-  if(!dirButton)return;
   const isRtl=root.dir==='rtl';
-  dirButton.textContent=isRtl?'LTR':'RTL';
-  dirButton.setAttribute('aria-label',isRtl?'Switch to LTR layout':'Switch to RTL layout');
-  dirButton.title=dirButton.getAttribute('aria-label');
+  $$('.dir-toggle').forEach(btn => {
+    btn.textContent=isRtl?'LTR':'RTL';
+    btn.setAttribute('aria-label',isRtl?'Switch to LTR layout':'Switch to RTL layout');
+    btn.title=btn.getAttribute('aria-label');
+  });
 }
 syncDirIcon();
-dirButton?.addEventListener('click',()=>{
-  root.dir=root.dir==='rtl'?'ltr':'rtl';
-  localStorage.setItem('chauffeur-dir',root.dir);
-  syncDirIcon();
-  toast(root.dir==='rtl'?'RTL direction enabled':'LTR direction enabled');
+document.addEventListener('click', (e) => {
+  const btn = e.target.closest('.dir-toggle');
+  if (btn) {
+    root.dir=root.dir==='rtl'?'ltr':'rtl';
+    localStorage.setItem('chauffeur-dir',root.dir);
+    syncDirIcon();
+    toast(root.dir==='rtl'?'RTL direction enabled':'LTR direction enabled');
+  }
 });
 
 // Accordion / FAQ Toggle logic (Manual Click Toggle)

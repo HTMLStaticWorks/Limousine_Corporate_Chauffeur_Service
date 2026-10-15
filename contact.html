@@ -199,25 +199,55 @@
           </div>
           <p>Locate our primary dispatch centers and VIP terminal arrival desks across major financial hubs.</p>
         </div>
-        <div class="map-wrapper reveal">
-          <div class="map-card-overlay">
-            <span class="eyebrow" style="font-size:10px">Selected Headquarters</span>
-            <h3 style="font-size:18px;margin:6px 0 4px;color:var(--text)" id="map-hub-name">Americas HQ — New York</h3>
-            <p style="font-size:12px;color:var(--muted);margin:0" id="map-hub-addr">575 Fifth Avenue, 28th Floor, New
-              York, NY 10017</p>
-            <div style="margin-top:10px;font-size:12px;font-weight:700;color:var(--accent2)" id="map-hub-phone">24/7
-              Desk: +1 (212) 555-0199</div>
-            <div class="map-location-pills">
-              <button class="map-btn active" type="button" onclick="switchMapHub('ny', this)">New York</button>
-              <button class="map-btn" type="button" onclick="switchMapHub('london', this)">London</button>
-              <button class="map-btn" type="button" onclick="switchMapHub('dubai', this)">Dubai</button>
-              <button class="map-btn" type="button" onclick="switchMapHub('tokyo', this)">Tokyo</button>
+        <div class="contact-map-layout reveal">
+          <!-- SEPARATE HEADQUARTERS SELECTOR CARD WITH PROPER CONTRAST & VISIBILITY -->
+          <div class="map-hub-card">
+            <div>
+              <div class="map-hub-header">
+                <span class="eyebrow" style="display:block;margin-bottom:6px">Select Global Headquarters</span>
+                <h3 id="map-hub-name" class="map-hub-title">Americas HQ — New York</h3>
+              </div>
+
+              <div class="map-selector-box">
+                <span class="map-selector-label">Choose Location:</span>
+                <div class="map-location-pills">
+                  <button class="map-btn active" type="button" onclick="switchMapHub('ny', this)">New York</button>
+                  <button class="map-btn" type="button" onclick="switchMapHub('london', this)">London</button>
+                  <button class="map-btn" type="button" onclick="switchMapHub('dubai', this)">Dubai</button>
+                  <button class="map-btn" type="button" onclick="switchMapHub('tokyo', this)">Tokyo</button>
+                </div>
+              </div>
+
+              <div class="map-hub-details">
+                <div class="hub-detail-item">
+                  <span class="hub-detail-label">Office Address</span>
+                  <p class="hub-detail-val" id="map-hub-addr">575 Fifth Avenue, 28th Floor, New York, NY 10017</p>
+                </div>
+                <div class="hub-detail-item">
+                  <span class="hub-detail-label">24/7 Dispatch Phone</span>
+                  <p class="hub-detail-val hub-detail-highlight" id="map-hub-phone">+1 (212) 555-0199</p>
+                </div>
+                <div class="hub-detail-item">
+                  <span class="hub-detail-label">Direct Hub Email</span>
+                  <p class="hub-detail-val hub-detail-highlight" id="map-hub-email">ny@chauffeur.example</p>
+                </div>
+                <div class="hub-detail-item">
+                  <span class="hub-detail-label">Dispatch Operations</span>
+                  <p class="hub-detail-val">24/7/365 Dedicated Live Human Desk</p>
+                </div>
+              </div>
             </div>
+
+            <button class="btn small primary open-book" style="width:100%;margin-top:16px">Book From This Hub →</button>
           </div>
-          <iframe id="global-map-iframe" class="map-frame"
-            src="https://maps.google.com/maps?q=575+Fifth+Avenue+New+York&t=&z=14&ie=UTF8&iwloc=&output=embed"
-            allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"
-            title="Chauffeur Global Dispatch Locations Map"></iframe>
+
+          <!-- SEPARATE MAP CONTAINER (CLEAN & UNOBSTRUCTED) -->
+          <div class="map-frame-clean-wrapper">
+            <iframe id="global-map-iframe" class="map-frame"
+              src="https://maps.google.com/maps?q=575+Fifth+Avenue+New+York&t=&z=14&ie=UTF8&iwloc=&output=embed"
+              allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+              title="Chauffeur Global Dispatch Locations Map"></iframe>
+          </div>
         </div>
       </div>
     </section>
@@ -230,28 +260,33 @@
       const nameEl = document.getElementById('map-hub-name');
       const addrEl = document.getElementById('map-hub-addr');
       const phoneEl = document.getElementById('map-hub-phone');
+      const emailEl = document.getElementById('map-hub-email');
       document.querySelectorAll('.map-btn').forEach(b => b.classList.remove('active'));
 
       if (hub === 'ny') {
         mapFrame.src = "https://maps.google.com/maps?q=575+Fifth+Avenue+New+York&t=&z=14&ie=UTF8&iwloc=&output=embed";
         nameEl.textContent = "Americas HQ — New York";
         addrEl.textContent = "575 Fifth Avenue, 28th Floor, New York, NY 10017";
-        phoneEl.textContent = "24/7 Desk: +1 (212) 555-0199";
+        phoneEl.textContent = "+1 (212) 555-0199";
+        if (emailEl) emailEl.textContent = "ny@chauffeur.example";
       } else if (hub === 'london') {
         mapFrame.src = "https://maps.google.com/maps?q=10+Berkeley+Square+London&t=&z=14&ie=UTF8&iwloc=&output=embed";
         nameEl.textContent = "Europe HQ — London";
         addrEl.textContent = "10 Berkeley Square, Mayfair, London W1J 6AA";
-        phoneEl.textContent = "24/7 Desk: +44 20 7946 0912";
+        phoneEl.textContent = "+44 20 7946 0912";
+        if (emailEl) emailEl.textContent = "london@chauffeur.example";
       } else if (hub === 'dubai') {
         mapFrame.src = "https://maps.google.com/maps?q=DIFC+Gate+Precinct+4+Dubai&t=&z=14&ie=UTF8&iwloc=&output=embed";
         nameEl.textContent = "Middle East HQ — Dubai";
         addrEl.textContent = "DIFC Gate Precinct 4, Downtown Dubai, UAE";
-        phoneEl.textContent = "24/7 Desk: +971 4 312 9000";
+        phoneEl.textContent = "+971 4 312 9000";
+        if (emailEl) emailEl.textContent = "dubai@chauffeur.example";
       } else if (hub === 'tokyo') {
         mapFrame.src = "https://maps.google.com/maps?q=Roppongi+Hills+Mori+Tower+Tokyo&t=&z=14&ie=UTF8&iwloc=&output=embed";
         nameEl.textContent = "Asia HQ — Tokyo";
         addrEl.textContent = "Roppongi Hills Mori Tower, Minato-ku, Tokyo 106-6108";
-        phoneEl.textContent = "24/7 Desk: +81 3 5555 0143";
+        phoneEl.textContent = "+81 3 5555 0143";
+        if (emailEl) emailEl.textContent = "tokyo@chauffeur.example";
       }
       if (btn) btn.classList.add('active');
     }
