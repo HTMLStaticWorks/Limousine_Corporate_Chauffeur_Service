@@ -9,18 +9,17 @@
   <link rel="stylesheet" href="style.css">
   <style>
     /* ========================================================
-       EXECUTIVE DASHBOARD SIDEBAR (PINNED 100VH TO VIEWPORT)
+       EXECUTIVE DASHBOARD SIDEBAR (FIXED 100VH TO VIEWPORT)
        ======================================================== */
     .dash {
-      display: grid;
-      grid-template-columns: 260px 1fr;
-      min-height: 100vh;
-      align-items: start;
-      width: 100%;
+      display: flex !important;
+      min-height: 100vh !important;
+      width: 100% !important;
       background: var(--bg);
+      position: relative;
     }
 
-    /* Sidebar is pinned to viewport so bottom controls are always visible */
+    /* Sidebar is pinned to viewport so height is always consistent & controls never shift */
     .side {
       background: #090a0b !important;
       border-right: 1px solid rgba(255, 255, 255, 0.08) !important;
@@ -28,18 +27,23 @@
       color: #f5f3ee;
       display: flex !important;
       flex-direction: column !important;
-      justify-content: space-between !important;
+      justify-content: flex-start !important;
+      position: fixed !important;
+      top: 0 !important;
+      bottom: 0 !important;
+      left: 0 !important;
+      right: auto !important;
+      width: 260px !important;
       height: 100vh !important;
+      height: 100dvh !important;
+      min-height: 100vh !important;
       max-height: 100vh !important;
-      min-height: 0 !important;
       padding: 22px 14px 18px !important;
       box-sizing: border-box !important;
-      position: sticky !important;
-      top: 0 !important;
-      align-self: start !important;
       z-index: 100 !important;
       overflow-y: auto !important;
       overflow-x: hidden !important;
+      transition: background 0.25s ease, border-color 0.25s ease, color 0.25s ease !important;
     }
 
     .side::-webkit-scrollbar {
@@ -56,12 +60,9 @@
       background: rgba(255, 255, 255, 0.25);
     }
 
-    html[data-theme="light"] .side {
-      background: #090a0b !important;
-      border-right: 1px solid rgba(255, 255, 255, 0.08) !important;
-    }
-
     html[dir="rtl"] .side {
+      left: auto !important;
+      right: 0 !important;
       border-right: none !important;
       border-left: 1px solid rgba(255, 255, 255, 0.08) !important;
     }
@@ -75,6 +76,7 @@
       border-bottom: 1px solid rgba(255, 255, 255, 0.08);
       margin-bottom: 18px;
       flex-shrink: 0;
+      transition: border-color 0.25s ease;
     }
 
     .side .brand {
@@ -101,10 +103,12 @@
       letter-spacing: -0.03em !important;
       line-height: 1 !important;
       white-space: nowrap !important;
+      transition: color 0.25s ease;
     }
 
     .side .brand-text .dot {
       color: #e6b17b !important;
+      transition: color 0.25s ease;
     }
 
     .side-close-btn {
@@ -116,7 +120,7 @@
       cursor: pointer;
       line-height: 1;
       padding: 4px 6px;
-      transition: opacity 0.2s;
+      transition: opacity 0.2s, color 0.25s ease;
     }
 
     .side-close-btn:hover {
@@ -127,8 +131,8 @@
     .side-nav {
       display: flex;
       flex-direction: column;
-      gap: 3px;
-      flex-shrink: 0;
+      gap: 4px;
+      flex: 0 0 auto !important;
     }
 
     .side .eyebrow,
@@ -141,6 +145,7 @@
       text-transform: uppercase !important;
       padding: 0 10px 8px !important;
       margin: 0 !important;
+      transition: color 0.25s ease;
     }
 
     .side a {
@@ -163,41 +168,20 @@
       background: #191c1f !important;
       color: #ffffff !important;
       font-weight: 600 !important;
+      box-shadow: inset 3px 0 0 #e6b17b !important;
     }
 
-    /* Bottom Section */
+    html[dir="rtl"] .side a.active {
+      box-shadow: inset -3px 0 0 #e6b17b !important;
+    }
+
+    /* Sidebar Actions & Utility Controls (Placed directly after menu) */
     .side-bottom-section {
-      margin-top: auto;
-      padding-top: 14px;
-      flex-shrink: 0;
-    }
-
-    .side-signout-row {
-      border-top: 1px solid rgba(255, 255, 255, 0.08);
-      padding: 12px 6px 12px;
-    }
-
-    .side-signout-btn {
-      color: #e6b17b !important;
-      font-weight: 700 !important;
-      font-size: 13px !important;
-      text-decoration: none;
-      display: inline-block;
-      padding: 0 !important;
-      transition: color 0.2s ease;
-    }
-
-    .side-signout-btn:hover {
-      color: #d58b4d !important;
-      background: transparent !important;
-    }
-
-    /* Sidebar Bottom Controls */
-    .side-bottom-section {
-      margin-top: auto;
-      padding-top: 14px;
+      margin-top: 18px !important;
+      padding-top: 14px !important;
       flex-shrink: 0;
       border-top: 1px solid rgba(255, 255, 255, 0.08);
+      transition: border-color 0.25s ease;
     }
 
     .side-bottom-controls {
@@ -266,21 +250,119 @@
     }
 
     /* ========================================================
-       TOP RIGHT CORNER: EXCLUSIVE PROFILE DETAILS ONLY
+       BRIGHT MODE (LIGHT THEME) STYLING FOR SIDEBAR
        ======================================================== */
-    .dash-profile-corner {
+    html[data-theme="light"] .side {
+      background: #ffffff !important;
+      border-right: 1px solid #d8d3ca !important;
+      border-left: none !important;
+      color: #171817 !important;
+      box-shadow: 2px 0 20px rgba(0, 0, 0, 0.04) !important;
+    }
+
+    html[data-theme="light"][dir="rtl"] .side {
+      border-right: none !important;
+      border-left: 1px solid #d8d3ca !important;
+      box-shadow: -2px 0 20px rgba(0, 0, 0, 0.04) !important;
+    }
+
+    html[data-theme="light"] .side::-webkit-scrollbar-thumb {
+      background: rgba(0, 0, 0, 0.12);
+    }
+    html[data-theme="light"] .side::-webkit-scrollbar-thumb:hover {
+      background: rgba(0, 0, 0, 0.25);
+    }
+
+    html[data-theme="light"] .side-top-row {
+      border-bottom: 1px solid #ede8de !important;
+    }
+
+    html[data-theme="light"] .side .brand-text {
+      color: #171817 !important;
+    }
+
+    html[data-theme="light"] .side .brand-text .dot {
+      color: #a96035 !important;
+    }
+
+    html[data-theme="light"] .side-close-btn {
+      color: #171817 !important;
+    }
+
+    html[data-theme="light"] .side .eyebrow,
+    html[data-theme="light"] .side .side-heading {
+      color: #a96035 !important;
+    }
+
+    html[data-theme="light"] .side a {
+      color: #55585b !important;
+    }
+
+    html[data-theme="light"] .side a:hover {
+      background: rgba(0, 0, 0, 0.04) !important;
+      color: #171817 !important;
+    }
+
+    html[data-theme="light"] .side a.active {
+      background: #ede6d8 !important;
+      color: #171817 !important;
+      font-weight: 700 !important;
+      box-shadow: inset 3px 0 0 #a96035 !important;
+    }
+
+    html[data-theme="light"][dir="rtl"] .side a.active {
+      box-shadow: inset -3px 0 0 #a96035 !important;
+    }
+
+    html[data-theme="light"] .side-bottom-section {
+      border-top: 1px solid #ede8de !important;
+    }
+
+    html[data-theme="light"] .side-signout-btn {
+      color: #a96035 !important;
+    }
+
+    html[data-theme="light"] .side-signout-btn:hover {
+      color: #7d3f1c !important;
+    }
+
+    html[data-theme="light"] .side-toggles .theme-toggle,
+    html[data-theme="light"] .side-toggles .dir-toggle {
+      background: #f4eee2 !important;
+      border: 1px solid #dcd4c6 !important;
+      color: #171817 !important;
+    }
+
+    html[data-theme="light"] .side-toggles .theme-toggle:hover,
+    html[data-theme="light"] .side-toggles .dir-toggle:hover {
+      background: #eae1d2 !important;
+      border-color: #a96035 !important;
+      color: #a96035 !important;
+    }
+
+    /* ========================================================
+       TOP RIGHT CORNER: USER PROFILE & ACTIONS (SIDE BY SIDE)
+       ======================================================== */
+    .dash-top-actions {
       position: absolute;
       top: 20px;
       right: 36px;
-      z-index: 100;
+      z-index: 150;
       display: inline-flex;
       align-items: center;
+      gap: 12px;
       pointer-events: auto;
     }
 
-    html[dir="rtl"] .dash-profile-corner {
+    html[dir="rtl"] .dash-top-actions {
       right: auto;
       left: 36px;
+    }
+
+    .dash-profile-corner {
+      display: inline-flex;
+      align-items: center;
+      pointer-events: auto;
     }
 
     .dash-profile-corner .user-chip {
@@ -356,14 +438,21 @@
       color: #b07238 !important;
     }
 
-    /* Main Dashboard Clean Spacing */
+    /* Main Dashboard Clean Spacing (offset 260px for fixed sidebar) */
     .dash-main {
+      flex: 1 1 auto !important;
+      min-width: 0 !important;
+      width: calc(100% - 260px) !important;
+      margin-left: 260px !important;
+      margin-right: 0 !important;
       padding: 72px 40px 40px !important;
-      min-width: 0;
-      max-width: 100%;
-      width: 100%;
-      box-sizing: border-box;
-      overflow-x: hidden;
+      box-sizing: border-box !important;
+      overflow-x: hidden !important;
+    }
+
+    html[dir="rtl"] .dash-main {
+      margin-left: 0 !important;
+      margin-right: 260px !important;
     }
 
     /* ========================================================
@@ -528,37 +617,62 @@
     /* Responsive Drawer Styles (360px & 768px Viewports) */
     @media (max-width: 780px) {
       .dash {
-        grid-template-columns: 1fr !important;
+        display: block !important;
+      }
+
+      .dash-main {
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+        width: 100% !important;
+        padding: 72px 4% 30px !important;
+      }
+
+      html[dir="rtl"] .dash-main {
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+      }
+
+      .dash-top-actions {
+        position: fixed !important;
+        top: 14px !important;
+        right: 14px !important;
+        z-index: 1500 !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        gap: 10px !important;
+      }
+
+      html[dir="rtl"] .dash-top-actions {
+        right: auto !important;
+        left: 14px !important;
       }
 
       .dash-mobile-trigger {
         display: inline-flex !important;
-        position: fixed;
-        top: 14px;
-        right: 14px;
-        z-index: 1500;
-        width: 42px;
-        height: 42px;
-        border-radius: 50%;
-        background: var(--panel);
-        border: 1px solid var(--line);
-        color: var(--text);
-        align-items: center;
-        justify-content: center;
-        font-size: 18px;
-        cursor: pointer;
-        box-shadow: 0 4px 18px rgba(0, 0, 0, 0.35);
-        transition: transform 0.2s ease, border-color 0.2s ease;
+        position: static !important;
+        top: auto !important;
+        right: auto !important;
+        left: auto !important;
+        width: 38px !important;
+        height: 38px !important;
+        min-width: 38px !important;
+        min-height: 38px !important;
+        border-radius: 50% !important;
+        background: var(--panel) !important;
+        border: 1px solid var(--line) !important;
+        color: var(--text) !important;
+        align-items: center !important;
+        justify-content: center !important;
+        font-size: 17px !important;
+        cursor: pointer !important;
+        box-shadow: 0 4px 18px rgba(0, 0, 0, 0.25) !important;
+        transition: transform 0.2s ease, border-color 0.2s ease !important;
+        flex-shrink: 0 !important;
       }
 
       .dash-mobile-trigger:hover {
-        border-color: var(--accent);
-        transform: scale(1.05);
-      }
-
-      html[dir="rtl"] .dash-mobile-trigger {
-        right: auto;
-        left: 14px;
+        border-color: var(--accent) !important;
+        transform: scale(1.05) !important;
       }
 
       .side {
@@ -566,10 +680,12 @@
         position: fixed !important;
         top: 0 !important;
         left: 0 !important;
+        right: auto !important;
         bottom: 0 !important;
         width: 280px !important;
         max-width: 85vw !important;
         height: 100vh !important;
+        height: 100dvh !important;
         background: #090a0b !important;
         border-right: 1px solid rgba(255, 255, 255, 0.08) !important;
         border-left: none !important;
@@ -586,9 +702,19 @@
         border-left: 1px solid rgba(255, 255, 255, 0.08) !important;
       }
 
+      html[data-theme="light"] .side {
+        background: #ffffff !important;
+        border-color: #d8d3ca !important;
+        box-shadow: 0 0 50px rgba(0, 0, 0, 0.16) !important;
+      }
+
       .side.open {
         display: flex !important;
         animation: slideInSide 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
+      }
+
+      html[dir="rtl"] .side.open {
+        animation: slideInSideRtl 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
       }
 
       .side-close-btn {
@@ -596,13 +722,9 @@
       }
 
       .dash-profile-corner {
-        top: 14px;
-        right: 14px;
-      }
-
-      html[dir="rtl"] .dash-profile-corner {
-        right: auto;
-        left: 14px;
+        position: static !important;
+        display: inline-flex !important;
+        align-items: center !important;
       }
 
       .dash-profile-corner .user-chip {
@@ -626,26 +748,22 @@
       .dash-profile-corner .user-info span {
         font-size: 9.5px !important;
       }
-
-      .dash-main {
-        padding: 72px 4% 30px !important;
-      }
     }
   </style>
 </head>
 <body>
-  <!-- MOBILE HAMBURGER TOGGLE BUTTON -->
-  <button class="menu dash-menu-toggle dash-mobile-trigger" type="button" aria-label="Open sidebar menu">☰</button>
-
-  <!-- TOP RIGHT CORNER: EXCLUSIVE PROFILE DETAILS ONLY -->
-  <div class="dash-profile-corner" aria-label="Current User Profile">
-    <div class="user-chip">
-      <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=120&q=80" alt="Alex R." class="user-avatar">
-      <div class="user-info">
-        <strong>Alex R.</strong>
-        <span>Acme Corp VIP</span>
+  <!-- TOP RIGHT ACTIONS: PROFILE CHIP & RESPONSIVE HAMBURGER (SIDE BY SIDE) -->
+  <div class="dash-top-actions" aria-label="Header profile and navigation controls">
+    <div class="dash-profile-corner" aria-label="Current User Profile">
+      <div class="user-chip">
+        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=120&q=80" alt="Alex R." class="user-avatar">
+        <div class="user-info">
+          <strong>Alex R.</strong>
+          <span>Acme Corp VIP</span>
+        </div>
       </div>
     </div>
+    <button class="menu dash-menu-toggle dash-mobile-trigger" type="button" aria-label="Open sidebar menu">☰</button>
   </div>
 
   <main class="dash">
