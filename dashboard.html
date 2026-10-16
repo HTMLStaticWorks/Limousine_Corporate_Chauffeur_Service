@@ -192,72 +192,44 @@
       background: transparent !important;
     }
 
-    /* User & Controls Capsule (Exact Match with Reference Image) */
-    .side-user-bar {
-      display: flex !important;
-      align-items: center !important;
-      justify-content: space-between !important;
-      gap: 6px !important;
-      background: #0d0f12 !important;
-      border: 1px solid rgba(255, 255, 255, 0.12) !important;
-      border-radius: 999px !important;
-      padding: 4px 6px !important;
-      box-sizing: border-box !important;
-      width: 100% !important;
+    /* Sidebar Bottom Controls */
+    .side-bottom-section {
+      margin-top: auto;
+      padding-top: 14px;
+      flex-shrink: 0;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
     }
 
-    .side-user-bar .user-chip {
-      display: flex !important;
-      align-items: center !important;
-      gap: 8px !important;
-      background: #181b1f !important;
-      border: 1px solid rgba(255, 255, 255, 0.08) !important;
-      border-radius: 999px !important;
-      padding: 3px 10px 3px 4px !important;
-      flex: 1 !important;
-      min-width: 0 !important;
-      box-sizing: border-box !important;
-      transition: background 0.2s ease;
+    .side-bottom-controls {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 6px 4px 4px;
     }
 
-    .side-user-bar .user-avatar {
-      width: 28px !important;
-      height: 28px !important;
-      border-radius: 50% !important;
-      object-fit: cover !important;
-      border: 1.5px solid #d4a373 !important;
-      flex-shrink: 0 !important;
-      display: block !important;
-    }
-
-    .side-user-bar .user-info {
-      display: flex !important;
-      flex-direction: column !important;
-      line-height: 1.15 !important;
-      overflow: hidden !important;
-      min-width: 0 !important;
-    }
-
-    .side-user-bar .user-info strong {
-      font-size: 12px !important;
-      color: #ffffff !important;
-      font-weight: 700 !important;
-      white-space: nowrap !important;
-      overflow: hidden !important;
-      text-overflow: ellipsis !important;
-    }
-
-    .side-user-bar .user-info span {
-      font-size: 9.5px !important;
+    .side-signout-btn {
       color: #e6b17b !important;
       font-weight: 700 !important;
-      white-space: nowrap !important;
-      overflow: hidden !important;
-      text-overflow: ellipsis !important;
+      font-size: 13px !important;
+      text-decoration: none;
+      display: inline-block;
+      padding: 0 !important;
+      transition: color 0.2s ease;
     }
 
-    .side-user-bar .theme-toggle,
-    .side-user-bar .dir-toggle {
+    .side-signout-btn:hover {
+      color: #d58b4d !important;
+      background: transparent !important;
+    }
+
+    .side-toggles {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .side-toggles .theme-toggle,
+    .side-toggles .dir-toggle {
       width: 32px !important;
       height: 32px !important;
       min-width: 32px !important;
@@ -275,27 +247,118 @@
       flex-shrink: 0 !important;
     }
 
-    .side-user-bar .theme-toggle {
+    .side-toggles .theme-toggle {
       font-size: 14px !important;
     }
 
-    .side-user-bar .dir-toggle {
+    .side-toggles .dir-toggle {
       font-size: 9.5px !important;
       font-weight: 800 !important;
       letter-spacing: -0.02em !important;
     }
 
-    .side-user-bar .theme-toggle:hover,
-    .side-user-bar .dir-toggle:hover {
+    .side-toggles .theme-toggle:hover,
+    .side-toggles .dir-toggle:hover {
       background: #24282e !important;
       border-color: #e6b17b !important;
       color: #e6b17b !important;
       transform: translateY(-1px);
     }
 
-    /* Main Dashboard Clean Spacing (No floating corner header) */
+    /* ========================================================
+       TOP RIGHT CORNER: EXCLUSIVE PROFILE DETAILS ONLY
+       ======================================================== */
+    .dash-profile-corner {
+      position: absolute;
+      top: 20px;
+      right: 36px;
+      z-index: 100;
+      display: inline-flex;
+      align-items: center;
+      pointer-events: auto;
+    }
+
+    html[dir="rtl"] .dash-profile-corner {
+      right: auto;
+      left: 36px;
+    }
+
+    .dash-profile-corner .user-chip {
+      display: inline-flex !important;
+      align-items: center !important;
+      gap: 10px !important;
+      background: #0f1115 !important;
+      border: 1px solid rgba(255, 255, 255, 0.14) !important;
+      border-radius: 999px !important;
+      padding: 4px 18px 4px 5px !important;
+      box-sizing: border-box !important;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35) !important;
+      transition: all 0.25s ease !important;
+      cursor: default;
+    }
+
+    html[dir="rtl"] .dash-profile-corner .user-chip {
+      padding: 4px 5px 4px 18px !important;
+    }
+
+    .dash-profile-corner .user-chip:hover {
+      border-color: rgba(230, 177, 123, 0.45) !important;
+      box-shadow: 0 6px 24px rgba(0, 0, 0, 0.45), 0 0 12px rgba(230, 177, 123, 0.12) !important;
+    }
+
+    .dash-profile-corner .user-avatar {
+      width: 32px !important;
+      height: 32px !important;
+      border-radius: 50% !important;
+      object-fit: cover !important;
+      border: 1.5px solid #d4a373 !important;
+      flex-shrink: 0 !important;
+      display: block !important;
+    }
+
+    .dash-profile-corner .user-info {
+      display: flex !important;
+      flex-direction: column !important;
+      line-height: 1.18 !important;
+      text-align: left;
+    }
+
+    html[dir="rtl"] .dash-profile-corner .user-info {
+      text-align: right;
+    }
+
+    .dash-profile-corner .user-info strong {
+      font-size: 13px !important;
+      color: #ffffff !important;
+      font-weight: 700 !important;
+      letter-spacing: -0.01em !important;
+      white-space: nowrap !important;
+    }
+
+    .dash-profile-corner .user-info span {
+      font-size: 10px !important;
+      color: #e6b17b !important;
+      font-weight: 700 !important;
+      letter-spacing: 0.02em !important;
+      white-space: nowrap !important;
+    }
+
+    /* Light Theme Adaptation for Top Profile Pill */
+    html[data-theme="light"] .dash-profile-corner .user-chip {
+      background: #ffffff !important;
+      border: 1px solid rgba(0, 0, 0, 0.12) !important;
+      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.08) !important;
+    }
+    html[data-theme="light"] .dash-profile-corner .user-info strong {
+      color: #121316 !important;
+    }
+    html[data-theme="light"] .dash-profile-corner .user-info span {
+      color: #b07238 !important;
+    }
+
+    /* Main Dashboard Clean Spacing */
     .dash-main {
-      padding: 35px 40px 40px !important;
+      padding: 72px 40px 40px !important;
       min-width: 0;
       max-width: 100%;
       width: 100%;
@@ -532,8 +595,40 @@
         display: inline-flex !important;
       }
 
+      .dash-profile-corner {
+        top: 14px;
+        right: 14px;
+      }
+
+      html[dir="rtl"] .dash-profile-corner {
+        right: auto;
+        left: 14px;
+      }
+
+      .dash-profile-corner .user-chip {
+        padding: 3px 12px 3px 4px !important;
+        gap: 8px !important;
+      }
+
+      html[dir="rtl"] .dash-profile-corner .user-chip {
+        padding: 3px 4px 3px 12px !important;
+      }
+
+      .dash-profile-corner .user-avatar {
+        width: 28px !important;
+        height: 28px !important;
+      }
+
+      .dash-profile-corner .user-info strong {
+        font-size: 12px !important;
+      }
+
+      .dash-profile-corner .user-info span {
+        font-size: 9.5px !important;
+      }
+
       .dash-main {
-        padding: 70px 4% 30px !important;
+        padding: 72px 4% 30px !important;
       }
     }
   </style>
@@ -541,6 +636,17 @@
 <body>
   <!-- MOBILE HAMBURGER TOGGLE BUTTON -->
   <button class="menu dash-menu-toggle dash-mobile-trigger" type="button" aria-label="Open sidebar menu">☰</button>
+
+  <!-- TOP RIGHT CORNER: EXCLUSIVE PROFILE DETAILS ONLY -->
+  <div class="dash-profile-corner" aria-label="Current User Profile">
+    <div class="user-chip">
+      <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=120&q=80" alt="Alex R." class="user-avatar">
+      <div class="user-info">
+        <strong>Alex R.</strong>
+        <span>Acme Corp VIP</span>
+      </div>
+    </div>
+  </div>
 
   <main class="dash">
     <!-- SIDEBAR NAV WITH BRAND LOGO AT TOP & USER CONTROLS AT BOTTOM -->
@@ -565,21 +671,14 @@
         <a href="#billing-section" data-dash-tab="billing-section">Invoices & Receipts</a>
       </div>
       
-      <!-- BOTTOM ACTIONS & USER BAR -->
+      <!-- BOTTOM ACTIONS & UTILITY CONTROLS -->
       <div class="side-bottom-section">
-        <div class="side-signout-row">
+        <div class="side-bottom-controls">
           <a href="#" id="open-signout-modal" class="side-signout-btn">Sign Out</a>
-        </div>
-        <div class="side-user-bar">
-          <div class="user-chip">
-            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=120&q=80" alt="Alex R." class="user-avatar">
-            <div class="user-info">
-              <strong>Alex R.</strong>
-              <span>Acme Corp VIP</span>
-            </div>
+          <div class="side-toggles">
+            <button class="theme-toggle" type="button" aria-label="Switch theme">☀</button>
+            <button class="dir-toggle" type="button" aria-label="Switch text direction">RTL</button>
           </div>
-          <button class="theme-toggle" type="button" aria-label="Switch theme">☀</button>
-          <button class="dir-toggle" type="button" aria-label="Switch text direction">RTL</button>
         </div>
       </div>
     </aside>

@@ -9,6 +9,64 @@
   <title>Corporate Mobility · Chauffeur.</title>
   <link rel="icon" type="image/png" href="favicon.png">
   <link rel="stylesheet" href="style.css">
+  <style>
+    /* EXECUTIVE CAPABILITIES: RESPONSIVE SERVICE CARDS & PRECISE IMAGE FRAMING */
+    .corp-service-grid {
+      display: grid !important;
+      grid-template-columns: repeat(4, 1fr) !important;
+      gap: 18px !important;
+      width: 100% !important;
+    }
+    .corp-service-img {
+      width: 100%;
+      height: 220px;
+      min-height: 200px;
+      aspect-ratio: 16 / 9.5;
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center center;
+      position: relative;
+      border-bottom: 1px solid var(--line);
+      flex-shrink: 0;
+      transition: transform 0.35s ease, filter 0.3s ease;
+    }
+    .corp-img-diplomatic {
+      background-position: center 60%;
+    }
+    .corp-img-roadshow {
+      background-position: center center;
+    }
+    .corp-img-governance {
+      background-position: center 40%;
+    }
+    .corp-img-intermodal {
+      background-position: center center;
+    }
+    /* TABLET VIEW (601px - 1050px): Keep an elegant 2x2 grid with ample proportional height */
+    @media (max-width: 1050px) and (min-width: 601px) {
+      .corp-service-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 20px !important;
+      }
+      .corp-service-img {
+        height: 230px !important;
+        min-height: 210px !important;
+        aspect-ratio: 16 / 9.5 !important;
+      }
+    }
+    /* MOBILE VIEW (<= 600px): Clean single-column layout with natural widescreen ratio */
+    @media (max-width: 600px) {
+      .corp-service-grid {
+        grid-template-columns: 1fr !important;
+        gap: 18px !important;
+      }
+      .corp-service-img {
+        height: 230px !important;
+        min-height: 200px !important;
+        aspect-ratio: 16 / 9.5 !important;
+      }
+    }
+  </style>
 </head>
 
 <body>
@@ -102,10 +160,10 @@
           <p>Discreet, precision-engineered transportation protocols designed exclusively for diplomatic missions,
             capital market roadshows, and C-Suite delegations.</p>
         </div>
-        <div class="grid4">
+        <div class="grid4 corp-service-grid">
           <!-- SERVICE 1 -->
           <div class="card corp-service-card reveal">
-            <div class="corp-service-img" style="background-image:url(conv.jfif)">
+            <div class="corp-service-img corp-img-diplomatic" style="background-image:url(conv.jfif)">
               <span class="badge">Sovereign & Diplomatic</span>
             </div>
             <div class="card-body">
@@ -125,7 +183,7 @@
 
           <!-- SERVICE 2 -->
           <div class="card corp-service-card reveal">
-            <div class="corp-service-img" style="background-image:url(inter.jfif)">
+            <div class="corp-service-img corp-img-roadshow" style="background-image:url(roadshow_fleet.jpg)">
               <span class="badge">Capital Markets</span>
             </div>
             <div class="card-body">
@@ -145,7 +203,7 @@
 
           <!-- SERVICE 3 -->
           <div class="card corp-service-card reveal">
-            <div class="corp-service-img" style="background-image:url(confi.jfif)">
+            <div class="corp-service-img corp-img-governance" style="background-image:url(board_security.jpg)">
               <span class="badge">C-Suite Governance</span>
             </div>
             <div class="card-body">
@@ -165,7 +223,7 @@
 
           <!-- SERVICE 4 -->
           <div class="card corp-service-card reveal">
-            <div class="corp-service-img" style="background-image:url(helipad.jfif)">
+            <div class="corp-service-img corp-img-intermodal" style="background-image:url(helipad_transfer.jpg)">
               <span class="badge">Intermodal Transfer</span>
             </div>
             <div class="card-body">

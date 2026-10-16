@@ -2105,7 +2105,7 @@ html[data-theme="light"] .side .side-close-btn {
   }
 
   .grid3,
-  .grid4,
+  .grid4:not(.corp-service-grid),
   .grid2 {
     grid-template-columns: 1fr;
     grid-auto-rows: auto;
@@ -3873,14 +3873,64 @@ html[dir="rtl"] .pass-toggle-btn {
   border-color: var(--accent);
 }
 
+.corp-service-grid {
+  display: grid !important;
+  grid-template-columns: repeat(4, 1fr) !important;
+  gap: 18px !important;
+  width: 100% !important;
+}
+
 .corp-service-img {
   width: 100%;
-  height: 180px;
+  height: 220px;
+  min-height: 200px;
+  aspect-ratio: 16 / 9.5;
   background-size: cover;
   background-position: center;
   position: relative;
   border-bottom: 1px solid var(--line);
   flex-shrink: 0;
+  transition: transform 0.35s ease, filter 0.3s ease;
+}
+
+.corp-img-diplomatic {
+  background-position: center 60%;
+}
+
+.corp-img-roadshow {
+  background-position: center center;
+}
+
+.corp-img-governance {
+  background-position: center 40%;
+}
+
+.corp-img-intermodal {
+  background-position: center center;
+}
+
+@media (max-width: 1050px) and (min-width: 601px) {
+  .corp-service-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 20px !important;
+  }
+  .corp-service-img {
+    height: 230px !important;
+    min-height: 210px !important;
+    aspect-ratio: 16 / 9.5 !important;
+  }
+}
+
+@media (max-width: 600px) {
+  .corp-service-grid {
+    grid-template-columns: 1fr !important;
+    gap: 18px !important;
+  }
+  .corp-service-img {
+    height: 230px !important;
+    min-height: 200px !important;
+    aspect-ratio: 16 / 9.5 !important;
+  }
 }
 
 .corp-service-img .badge {
